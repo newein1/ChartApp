@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ededed"
+        android:padding="22dp"
+        tools:context="io.github.introml.activityrecognition.MainActivity">
+
+        <TableRow
+            android:id="@+id/title_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="2dp"
+            android:textAlignment="center">
+
+            <Button
+                android:id="@+id/get_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Get Data" />
+
+            <Button
+                android:id="@+id/sensor_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Go To Sensor" />
+
+            <Button
+                android:id="@+id/connect_bluetooth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Connect Bluetooth" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/height_row"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="22dp">
+
+            <TextView
+                android:id="@+id/height_title"
+                android:layout_weight="1"
+                android:text="Height"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/height_view"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/weight_row"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="22dp">
+
+            <TextView
+                android:id="@+id/weight_title"
+                android:layout_weight="1"
+                android:text="Weight"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/weight_view"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/heart_row"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="22dp">
+
+            <TextView
+                android:id="@+id/heart_title"
+                android:layout_weight="1"
+                android:text="Heart Rate"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/heart_view"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/spo2_row"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="22dp">
+
+            <TextView
+                android:id="@+id/spo2_title"
+                android:layout_weight="1"
+                android:text="Spo2"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/spo2_view"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/blood_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="22dp">
+
+            <TextView
+                android:id="@+id/blood_title"
+                android:layout_weight="1"
+                android:text="Blood Rate"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/blood_view"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/temp_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="22dp">
+
+            <TextView
+                android:id="@+id/temp_title"
+                android:layout_weight="1"
+                android:text="Temp"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/temp_view"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </TableRow>
+    </TableLayout>
+</ScrollView>
