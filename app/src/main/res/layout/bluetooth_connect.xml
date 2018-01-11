@@ -22,22 +22,26 @@
 
     <Button
         android:id="@+id/tempButton"
-        android:layout_width="131dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.08"
-        android:text="Connect" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:text="Connect"
+        android:src="@drawable/ic_012_first_aid_kit_1"/>
 
     <Button
         android:id="@+id/lightOn"
-        android:layout_width="129dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.08"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:text="Light On" />
 
     <Button
         android:id="@+id/lightOff"
-        android:layout_width="132dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Light Off"
-        android:layout_weight="0.10" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:text="Light Off" />
 </LinearLayout>

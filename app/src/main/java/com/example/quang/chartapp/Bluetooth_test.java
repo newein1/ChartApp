@@ -22,7 +22,7 @@ public class Bluetooth_test extends AppCompatActivity {
 
     BluetoothSocket mmSocket;
     BluetoothDevice mmDevice = null;
-
+    private String username;
     boolean connected = false;
     boolean workDone = false;
     UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); //Standard SerialPortService ID
@@ -49,7 +49,8 @@ public class Bluetooth_test extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
-
+        Intent intent = getIntent();
+        username= intent.getStringExtra("UserName");
         BA = BluetoothAdapter.getDefaultAdapter();
         lv = (ListView)findViewById(R.id.listView);
 
@@ -87,7 +88,8 @@ public class Bluetooth_test extends AppCompatActivity {
         //start connect button handler
         connectButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(connected)(new Thread(new workerThread("Connected and sent string data"))).start();
+//                if(connected)(new Thread(new workerThread("Connected and sent string data"))).start();
+                if(connected)(new Thread(new workerThread(username))).start();
                 else Toast.makeText(Bluetooth_test.this, "device hasn't connected yet", Toast.LENGTH_SHORT).show();
             }
         });

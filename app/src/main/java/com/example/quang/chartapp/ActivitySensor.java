@@ -12,8 +12,13 @@ import android.speech.tts.TextToSpeech;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.content.Context;
+
+import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -37,9 +42,15 @@ public class ActivitySensor extends AppCompatActivity implements SensorEventList
     private TextView timewalkTextView;
     private TextView Activity;
     private TextToSpeech textToSpeech;
+    private ImageButton btnClick;
+    private ImageButton userClick;
+    private ImageButton bluetoothClick;
     private double height;
     private double weight;
     private double heartrate;
+    private double spo2;
+    private double temp;
+    private double calories;
     private int age=23;
     private float[] results;
     private float timewalk=0;
@@ -48,6 +59,7 @@ public class ActivitySensor extends AppCompatActivity implements SensorEventList
     private float timestan=0;
     private float timeupstair=0;
     private float timedownstair=0;
+    private float walkingtime = 0;
     final Context context = this;
     private TensorFlowClassifier classifier;
 
@@ -64,6 +76,13 @@ public class ActivitySensor extends AppCompatActivity implements SensorEventList
         height = intent.getDoubleExtra("Height",0.00);
         weight = intent.getDoubleExtra("Weight",0.00);
         heartrate = intent.getDoubleExtra("HeartRate",0.00);
+        spo2 = intent.getDoubleExtra("Spo2",0.00);
+        temp = intent.getDoubleExtra("Temp",0.00);
+        timewalk = intent.getFloatExtra("Time Walk", 0);
+        calories = intent.getDoubleExtra("Calories",0.00);
+//        Log.e("Time Walk:", String.valueOf(timewalk));
+//        Log.e("Calories:", String.valueOf(calories));
+
         downstairsTextView = (TextView) findViewById(R.id.downstairs_prob);
         joggingTextView = (TextView) findViewById(R.id.jogging_prob);
 //        joggingTextView.setText(Float.toString(round(results[1], 2)));
@@ -72,12 +91,46 @@ public class ActivitySensor extends AppCompatActivity implements SensorEventList
         upstairsTextView = (TextView) findViewById(R.id.upstairs_prob);
         walkingTextView = (TextView) findViewById(R.id.walking_prob);
         timewalkTextView = (TextView) findViewById(R.id.textView);
+        btnClick = (ImageButton) findViewById(R.id.get_data);
+        userClick = (ImageButton) findViewById(R.id.user_infor);
+        bluetoothClick = (ImageButton) findViewById(R.id.connect_bluetooth);
+
+        downstairsTextView.setText(Float.toString(round(timedownstair, 2)));
+        joggingTextView.setText(Float.toString(round(timejog, 2)));
+        sittingTextView.setText(Float.toString(round(timesit, 2)));
+        standingTextView.setText(Float.toString(round(timestan, 2)));
+        upstairsTextView.setText(Float.toString(round(timeupstair, 2)));
         Activity = (TextView) findViewById((R.id.title));
-        Activity.setText(Double.toString(weight));
+        Activity.setText(Float.toString(round((float) calories,2)));
+        timewalkTextView.setText(Float.toString(timewalk));
         classifier = new TensorFlowClassifier(getApplicationContext());
 
         textToSpeech = new TextToSpeech(this, this);
         textToSpeech.setLanguage(Locale.US);
+
+        btnClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ActivitySensor.this, MainActivity.class);
+                intent.putExtra("Calories",calories);
+                intent.putExtra("Time Walk",timewalk);
+                intent.putExtra("Height",height);
+                intent.putExtra("Weight",weight);
+                intent.putExtra("Spo2",spo2);
+                intent.putExtra("Temp",temp);
+                intent.putExtra("Heart Rate",heartrate);
+                startActivity(intent);
+            }
+        });
+
+        bluetoothClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bluetoothClick.setBackgroundColor(0xF5F5F5);
+                Intent intent2 = new Intent(ActivitySensor.this, Bluetooth_test.class);
+                startActivity(intent2);
+            }
+        });
     }
 
     @Override
@@ -100,16 +153,20 @@ public class ActivitySensor extends AppCompatActivity implements SensorEventList
                 }
                 switch (idx) {
                     case 0: timedownstair = timedownstair + 5;
+                            timewalk = timewalk + 5;
                         break;
                     case 1: timejog = timejog + 5;
+                            timewalk = timewalk + 5;
                         break;
                     case 2: timesit = timesit + 5;
                         break;
                     case 3: timestan = timestan + 5;
                         break;
                     case 4: timeupstair = timeupstair + 5;
+                            timewalk = timewalk + 5;
                         break;
-                    case 5: timewalk = timewalk + 5;
+                    case 5: walkingtime =walkingtime + 5;
+                        timewalk = timewalk + 5;
                         break;
                 }
 //                textToSpeech.speak(labels[idx], TextToSpeech.QUEUE_ADD, null, Integer.toString(new Random().nextInt()));
@@ -160,13 +217,13 @@ public class ActivitySensor extends AppCompatActivity implements SensorEventList
             sittingTextView.setText(Float.toString(round(timesit, 2)));
             standingTextView.setText(Float.toString(round(timestan, 2)));
             upstairsTextView.setText(Float.toString(round(timeupstair, 2)));
-            walkingTextView.setText(Float.toString(round(timewalk, 2)));
+            walkingTextView.setText(Float.toString(round(walkingtime, 2)));
             timewalkTextView.setText(Float.toString(round(timewalk,2)));
             double timeactivity = timewalk / 3600;
             double bmr = (9.99 * weight) + (6.25 * height) - (4.92*age) +5;
-            double calories = bmr * 3.5/24 * timeactivity;
-            Activity.setText(Double.toString(calories));
-            if ((timesit/60) >30) {
+            calories = bmr * 3.5/24 * timeactivity;
+            Activity.setText(Float.toString(round((float) calories,2)));
+            if (timesit >30) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
 

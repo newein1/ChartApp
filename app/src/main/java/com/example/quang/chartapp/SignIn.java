@@ -12,6 +12,7 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,6 +33,9 @@ public class SignIn extends Activity {
     private TextView Email_view;
     private TextView PassWord_view;
     private TextView Wrong_view;
+    private TextView Sign_up;
+    private String tempUserName;
+    private String tempEmail;
     private String Email;
     private String PassWord;
     private String GET_LOGIN_URL= "http://18.218.77.52:3000/";
@@ -43,13 +47,14 @@ public class SignIn extends Activity {
         Email_view = (TextView) findViewById(R.id.input_email);
         PassWord_view = (TextView) findViewById(R.id.input_password);
         Wrong_view = (TextView) findViewById(R.id.wrong_message);
+        Sign_up = (TextView) findViewById(R.id.link_signup);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Email = Email_view.getText().toString();
                 PassWord= PassWord_view.getText().toString();
-                Log.v("Email Input:",Email);
-                Log.v("PassWord Input:",PassWord);
+//                Log.v("Email Input:",Email);
+//                Log.v("PassWord Input:",PassWord);
 //                if (check == 1) {
 //                    Intent intent = new Intent(SignIn.this, MainActivity.class);
 //                    startActivity(intent);
@@ -59,6 +64,14 @@ public class SignIn extends Activity {
 
             }
         });
+        Sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(SignIn.this, SignUp.class);
+                startActivity(intent1);
+            }
+        });
+
     }
     public class GetLoginData extends AsyncTask<String , Void ,String> {
         String server_response;
@@ -80,18 +93,25 @@ public class SignIn extends Activity {
 //                    Log.v("CatalogClient", server_response);
                     save = "";
                     save = save + server_response;
-                    Log.v("CatalogClient",save);
+//                    Log.v("CatalogClient",save);
                     save2 = "";
                     save2 = save2 + save;
                     JSONArray logindata= new JSONArray(save);
                     for (int i=0; i<logindata.length();i++){
                         JSONObject obj = logindata.getJSONObject(i);
-                        String tempEmail =obj.getString("Email");
+                        tempUserName = obj.getString("UserName");
+                        tempEmail =obj.getString("Email");
                         String tempPassWord = obj.getString("PassWord");
-                        if (tempEmail.equals(Email) && tempPassWord.equals(PassWord) ) {
+                        Log.e("UserName: ",tempUserName);
+                        Log.e("Email: ",tempEmail);
+                        if (tempUserName.equals(Email)  && tempPassWord.equals(PassWord)) {
+                            Log.e("UserName: ",tempUserName);
                             check = 1;
-                            Intent intent = new Intent(SignIn.this, MainActivity.class);
-                            startActivity(intent);
+                            break;
+                        }
+                        if (tempEmail.equals(Email)  && tempPassWord.equals(PassWord)) {
+                            Log.e("UserName: ",tempUserName);
+                            check = 1;
                             break;
                         }
                     }
@@ -111,11 +131,16 @@ public class SignIn extends Activity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
-            Log.e("Response", "" + server_response);
-            if (check == 0) {
+            if (check==0) {
                 Wrong_view.setText("Wrong email or password");
+            } else{
+                Wrong_view.setText("");
+                check = 0;
+                Intent intent = new Intent(SignIn.this, MainActivity.class);
+                intent.putExtra("UserName",tempUserName);
+                startActivity(intent);
             }
+//            Log.e("Response", "" + server_response);
         }
     }
 
