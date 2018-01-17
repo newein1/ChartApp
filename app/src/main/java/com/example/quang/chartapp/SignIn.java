@@ -38,6 +38,7 @@ public class SignIn extends Activity {
     private String tempEmail;
     private String Email;
     private String PassWord;
+    private int age=24;
     private String GET_LOGIN_URL= "http://18.218.77.52:3000/";
     private int check =0;
     protected void onCreate(Bundle savedInstanceState){
@@ -101,16 +102,21 @@ public class SignIn extends Activity {
                         JSONObject obj = logindata.getJSONObject(i);
                         tempUserName = obj.getString("UserName");
                         tempEmail =obj.getString("Email");
+                        int tempAge = obj.getInt("Age");
                         String tempPassWord = obj.getString("PassWord");
                         Log.e("UserName: ",tempUserName);
                         Log.e("Email: ",tempEmail);
                         if (tempUserName.equals(Email)  && tempPassWord.equals(PassWord)) {
                             Log.e("UserName: ",tempUserName);
+                            age=tempAge;
+                            Log.e("Age: ",String.valueOf(age));
                             check = 1;
                             break;
                         }
                         if (tempEmail.equals(Email)  && tempPassWord.equals(PassWord)) {
                             Log.e("UserName: ",tempUserName);
+                            age=tempAge;
+                            Log.e("Age: ",String.valueOf(age));
                             check = 1;
                             break;
                         }
@@ -138,6 +144,7 @@ public class SignIn extends Activity {
                 check = 0;
                 Intent intent = new Intent(SignIn.this, MainActivity.class);
                 intent.putExtra("UserName",tempUserName);
+                intent.putExtra("Age",age);
                 startActivity(intent);
             }
 //            Log.e("Response", "" + server_response);

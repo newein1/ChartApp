@@ -203,6 +203,36 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/max_heart_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/max_heart_title"
+                android:layout_weight="1"
+                android:text="Max Heart Rate"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/max_heart_view"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <ImageButton
+            android:id="@+id/heart_predict"
+            android:layout_width="30dp"
+            android:layout_height="67dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_heart"
+            android:text="Heart"
+            android:textSize="18sp" />
+        <TableRow
             android:id="@+id/sensor_row"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -213,9 +243,9 @@
 
             <ImageButton
                 android:id="@+id/connect_bluetooth"
-                android:layout_width="95dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
-
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_bluetooth"
                 android:text="Connect Bluetooth"
@@ -223,7 +253,7 @@
 
             <ImageButton
                 android:id="@+id/sensor_change"
-                android:layout_width="30dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
@@ -231,9 +261,10 @@
                 android:text="Go To Sensor"
                 android:textSize="18sp" />
 
+
             <ImageButton
                 android:id="@+id/user_infor"
-                android:layout_width="25dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"

@@ -73,6 +73,7 @@ public class ActivitySensor extends AppCompatActivity implements SensorEventList
         y = new ArrayList<>();
         z = new ArrayList<>();
         Intent intent = getIntent();
+        age= intent.getIntExtra("Age",24);
         height = intent.getDoubleExtra("Height",0.00);
         weight = intent.getDoubleExtra("Weight",0.00);
         heartrate = intent.getDoubleExtra("HeartRate",0.00);
