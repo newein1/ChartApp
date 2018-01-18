@@ -232,6 +232,7 @@
             android:src="@drawable/ic_heart"
             android:text="Heart"
             android:textSize="18sp" />
+
         <TableRow
             android:id="@+id/sensor_row"
             android:layout_width="match_parent"
@@ -244,8 +245,8 @@
             <ImageButton
                 android:id="@+id/connect_bluetooth"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_bluetooth"
                 android:text="Connect Bluetooth"

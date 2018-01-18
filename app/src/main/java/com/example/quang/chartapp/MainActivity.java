@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private float timewalk;
     private String username;
     private int age;
+    private int sex;
     final Context context = this;
     private String GET_RESULT_URL = "http://18.218.77.52:3000/getresult";
     private String GET_RESULT_WITH_NAME_URL = "http://18.218.77.52:3000/list";
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         spo2_value= getfromsensor.getDoubleExtra("Spo2",0.00);
         username = getfromsensor.getStringExtra("UserName");
         age=getfromsensor.getIntExtra("Age",24);
-
+        sex=getfromsensor.getIntExtra("Sex",1);
         Height = (TextView) findViewById(R.id.height_view);
         Weight = (TextView) findViewById(R.id.weight_view);
         HeartRate = (TextView) findViewById(R.id.heart_view);
@@ -135,6 +136,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("Calories",Calories);
                 intent.putExtra("Time Walk",timewalk);
                 intent.putExtra("Age",age);
+                intent.putExtra("Sex",sex);
+                intent.putExtra("UserName",username);
                 startActivity(intent);
                 //startActivity(new Intent(MainActivity.this, ActivitySensor.class));;
             }
@@ -162,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
         heartpredictClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new HeartPredictMethod().execute(GET_HEART_PREDICTION_URL);
+
+                new HeartPredictMethodTest().execute(GET_HEART_PREDICTION_URL);
             }
         });
 
@@ -259,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class HeartPredictMethod extends AsyncTask<String , Void ,String> {
+    public class HeartPredictMethodTest extends AsyncTask<String , Void ,String> {
         String server_response;
 
         @Override

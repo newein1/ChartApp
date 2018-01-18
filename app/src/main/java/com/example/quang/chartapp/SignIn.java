@@ -145,6 +145,7 @@ public class SignIn extends Activity {
                 Intent intent = new Intent(SignIn.this, MainActivity.class);
                 intent.putExtra("UserName",tempUserName);
                 intent.putExtra("Age",age);
+                intent.putExtra("Sex",age);
                 startActivity(intent);
             }
 //            Log.e("Response", "" + server_response);

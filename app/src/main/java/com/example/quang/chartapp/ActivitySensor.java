@@ -52,6 +52,7 @@ public class ActivitySensor extends AppCompatActivity implements SensorEventList
     private double temp;
     private double calories;
     private int age=23;
+    private int sex=1;
     private float[] results;
     private float timewalk=0;
     private float timesit=0;
@@ -60,6 +61,7 @@ public class ActivitySensor extends AppCompatActivity implements SensorEventList
     private float timeupstair=0;
     private float timedownstair=0;
     private float walkingtime = 0;
+    private String username;
     final Context context = this;
     private TensorFlowClassifier classifier;
 
@@ -74,6 +76,7 @@ public class ActivitySensor extends AppCompatActivity implements SensorEventList
         z = new ArrayList<>();
         Intent intent = getIntent();
         age= intent.getIntExtra("Age",24);
+        sex=intent.getIntExtra("Sex",1);
         height = intent.getDoubleExtra("Height",0.00);
         weight = intent.getDoubleExtra("Weight",0.00);
         heartrate = intent.getDoubleExtra("HeartRate",0.00);
@@ -81,6 +84,7 @@ public class ActivitySensor extends AppCompatActivity implements SensorEventList
         temp = intent.getDoubleExtra("Temp",0.00);
         timewalk = intent.getFloatExtra("Time Walk", 0);
         calories = intent.getDoubleExtra("Calories",0.00);
+        username = intent.getStringExtra("UserName");
 //        Log.e("Time Walk:", String.valueOf(timewalk));
 //        Log.e("Calories:", String.valueOf(calories));
 
@@ -120,6 +124,7 @@ public class ActivitySensor extends AppCompatActivity implements SensorEventList
                 intent.putExtra("Spo2",spo2);
                 intent.putExtra("Temp",temp);
                 intent.putExtra("Heart Rate",heartrate);
+                intent.putExtra("UserName",username);
                 startActivity(intent);
             }
         });
@@ -130,6 +135,14 @@ public class ActivitySensor extends AppCompatActivity implements SensorEventList
                 bluetoothClick.setBackgroundColor(0xF5F5F5);
                 Intent intent2 = new Intent(ActivitySensor.this, Bluetooth_test.class);
                 startActivity(intent2);
+            }
+        });
+        userClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent senduserinfor = new Intent(ActivitySensor.this, UserInfor.class);
+                senduserinfor.putExtra("UserName",username);
+                startActivity(senduserinfor);
             }
         });
     }
@@ -221,7 +234,12 @@ public class ActivitySensor extends AppCompatActivity implements SensorEventList
             walkingTextView.setText(Float.toString(round(walkingtime, 2)));
             timewalkTextView.setText(Float.toString(round(timewalk,2)));
             double timeactivity = timewalk / 3600;
-            double bmr = (9.99 * weight) + (6.25 * height) - (4.92*age) +5;
+            double bmr;
+            if (sex==0){
+                bmr =(9.99 * weight) + (6.25 * height) - (4.92*age) - 161;
+            } else{
+                bmr =(9.99 * weight) + (6.25 * height) - (4.92*age) + 5;
+            }
             calories = bmr * 3.5/24 * timeactivity;
             Activity.setText(Float.toString(round((float) calories,2)));
             if (timesit >30) {
